@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery syncScroll example</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="jquery.syncscroll.js"></script>
+	<style>
+		/* Base */
+		body {
+			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		ol {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style-type: none;
+			padding: 0 30px;
+		}
+
+		/* Header */
+		.header {
+			height: 100px;
+			width: 100%;
+			overflow: hidden;
+			color: #fff;
+			position: fixed;
+			top: 0;
+		}
+		.header-placeholder {
+			height: 100px;
+		}
+		.header li {
+			line-height: 100px;
+			font-size: 30px;
+		}
+		#header-item-0 { background: #000; }
+		#header-item-1 { background: #111; }
+		#header-item-2 { background: #222; }
+		#header-item-3 { background: #333; }
+		#header-item-4 { background: #444; }
+		#header-item-5 { background: #555; }
+
+		/* Items */
+		.items li {
+			height: 200px;
+			line-height: 200px;
+			font-size: 60px;
+		}
+		#item-1 { background: #aaa; }
+		#item-2 { background: #bbb; }
+		#item-3 { background: #ccc; }
+		#item-4 { background: #ddd; }
+		#item-5 { background: #eee; }
+
+		.unsynced {
+			height: 250px;
+			line-height: 250px;
+			font-size: 60px;
+			background: #5a5faf;
+			color: #fff;
+			padding: 0 30px;
+		}
+	</style>
+	<script>
+		$(function(){
+
+			// Increase the document height, allowing the user to scroll past the end
+			var docHeight = $(document).height();
+			var resizeDocument = function() {
+				var wrapper = $('#wrapper');
+
+				var windowHeight = $(window).height();
+				var headerHeight = $('.header').outerHeight();
+
+				wrapper.css({
+					height: docHeight + windowHeight - headerHeight,
+					overflow: 'hidden'
+				});
+			};
+
+			$(window).resize(function() {
+				resizeDocument();
+			});
+			resizeDocument();
+	
+
+			// Synchronize scroll
+			$(document).syncScroll('.header', {
+				offset: $('.unsynced').height(), // only start sync after we scroll past the unsynced content
+				ratio: 0.5 // header height is half the size of a single item
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div class="header">
+			<ol>
+				<li id="header-item-0">Header</li>
+				<li id="header-item-1">Item 1 inside header</li>
+				<li id="header-item-2">Item 2 inside header</li>
+				<li id="header-item-3">Item 3 inside header</li>
+				<li id="header-item-4">Item 4 inside header</li>
+				<li id="header-item-5">Item 5 inside header</li>
+			</ol>
+		</div>
+		<div class="header-placeholder"></div>
+
+		<div class="unsynced">
+			Unsynchronised scroll content
+		</div>
+
+		<ol class="items">
+			<li id="item-1">Synchronised Item 1</li>
+			<li id="item-2">Synchronised Item 2</li>
+			<li id="item-3">Synchronised Item 3</li>
+			<li id="item-4">Synchronised Item 4</li>
+			<li id="item-5">Synchronised Item 5</li>
+		</ol>
+	</div>
+</body>
+</html>
