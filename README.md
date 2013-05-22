@@ -18,3 +18,7 @@ $(document).syncScroll('.header', {
 ```
 
 Both `offset` and `ratio` can be either an numeric value or a function returning an number.
+
+## License
+
+jQuery.SyncScroll is released under the [MIT License](LICENSE.txt).
